@@ -1,16 +1,30 @@
 import axios from 'axios';
 
+const baseURL = import.meta.env.VITE_API_BASE_URL || 'https://masterid.in';
+
 const api = axios.create({
-  baseURL: 'https://masterid.in',
+  baseURL,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 export const registerUser = async (userData) => {
   try {
     const response = await api.post('/api/user/register', userData);
-    console.log(response.data);
     return response.data;
   } catch (error) {
     throw error.response?.data || error.message;
@@ -90,6 +104,37 @@ export const getNamePrefixes = async () => {
 export const getDocumentTypes = async () => {
   const response = await api.get('/api/documentTypes');
   return response.data;
+};
+
+export const login = async (credentials) => {
+  try {
+    // Transform credentials to match API expectations
+    const loginData = {
+      email: credentials.email,
+      password: credentials.password,
+      userType: "User"
+    };
+    
+    const response = await api.post('/api/user/user-login', loginData);
+    return response.data;
+  } catch (error) {
+    if (error.response?.status === 404) {
+      throw new Error('Login service is not available. Please try again later.');
+    }
+    if (error.response?.status === 400) {
+      throw new Error(error.response?.data?.message || 'Invalid credentials. Please check your email and password.');
+    }
+    throw error.response?.data || error.message;
+  }
+};
+
+export const refreshUserToken = async (refreshToken) => {
+  try {
+    const response = await api.post('/api/user/refresh-token', { refreshToken });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error.message;
+  }
 };
 
 export default api;
