@@ -14,7 +14,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-400 via-green-300 to-green-100 flex items-center justify-center p-4">
+    <div className="min-h-screen w-screen bg-gradient-to-br from-green-400 via-green-300 to-green-100 flex items-center justify-center p-4">
       <div className="max-w-2xl w-full bg-white rounded-2xl shadow-xl p-8">
         <div className="text-center">
           <h1 className="text-3xl font-bold text-gray-800 mb-4">

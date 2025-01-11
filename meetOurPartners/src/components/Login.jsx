@@ -78,7 +78,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-400 via-green-300 to-green-100 flex items-center justify-center p-4">
+    <div className="min-h-screen w-screen bg-gradient-to-br from-green-400 via-green-300 to-green-100 flex items-center justify-center p-4">
       <div className="max-w-4xl w-full bg-white rounded-2xl shadow-xl overflow-hidden flex">
         {/* Left side - Partners */}
         <div className="w-1/2 p-8 bg-white">
@@ -153,7 +153,7 @@ const Login = () => {
 
             <div className="text-center">
               <a href="/forgot-password" className="text-gray-600 hover:text-gray-800">
-                Forgot password
+                Forgot password?
               </a>
             </div>
 
