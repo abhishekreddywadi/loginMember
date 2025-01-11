@@ -21,7 +21,7 @@ const documentTypeMap = {
   'Passport': 5
 };
 
-export const mapFormToApiData = (formData, isBelow16) => {
+export const mapAdultFormToApiData = (formData) => {
   // Ensure we have a valid document type
   const documentType = formData.idProof || 'Aadhar Number';
   const documentTypeId = documentTypeMap[documentType];
@@ -38,13 +38,13 @@ export const mapFormToApiData = (formData, isBelow16) => {
   const apiData = {
     firstName: formData.legalName,
     lastName: formData.surname,
-    email: formData.hasEmail ? formData.guardianEmail : formData.email,
+    email: formData.email,
     nickName: formData.nickname || '',
     namePrefixId: namePrefixMap[formData.gender] || 1,
     namePrefix: formData.gender,
     gender: genderMap[formData.gender] || 1,
     birthDate: formData.dob,
-    phoneNumber: formData.hasPhone ? formData.guardianPhone : formData.phone,
+    phoneNumber: formData.phone,
     password: formData.password,
     schoolName: formData.schoolName || '',
     documentTypeId: documentTypeId,
@@ -52,18 +52,18 @@ export const mapFormToApiData = (formData, isBelow16) => {
     countryId: countryId,
     stateId: stateId,
     cityId: cityId,
-    postcode: formData.postcode,
+    postcode: formData.postcode || '',
     localAddress: formData.localAddress || '',
     careOfNumber: formData.contactNumber || '',
-    guardianId: isBelow16 ? 1 : 0,
-    guardianRelationId: isBelow16 ? 1 : 0,
-    guardianEmail: isBelow16 ? formData.guardianEmail : '',
+    guardianId: 0,
+    guardianRelationId: 0,
+    guardianEmail: '',
     isEmailVerified: true,
     isPhoneNumberVerified: false,
     validateRequest: true
   };
 
-  console.log('Mapped form data:', {
+  console.log('Mapped adult form data:', {
     originalDocType: formData.idProof,
     mappedDocTypeId: documentTypeId,
     location: {
