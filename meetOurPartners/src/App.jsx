@@ -31,6 +31,11 @@ function App() {
             <Route path="/reset-password" element={<ResetPassword />} />
             
             {/* Protected Routes */}
+            <Route path="/" element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            } />
         
             <Route path="/dashboard" element={
               <PrivateRoute>
